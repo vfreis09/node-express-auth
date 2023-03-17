@@ -2,6 +2,7 @@ const express = require('express');
 const db = require('../config/db');
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
@@ -34,10 +35,17 @@ const loginGet = (req, res) => {
 
 };
 
-const loginPost = (req, res) => {
-  const user = {
-    email: req.body.email,
-    password: req.body.password
+const loginPost = async (req, res) => {
+  const user = await User.findOne({
+    where: {
+      email: req.body.email
+    }
+  });
+  if(user) {
+    const auth = await bcrypt.compare(req.body.password, user.password);
+    if(auth) {
+      return user;
+    };
   };
 };
 
