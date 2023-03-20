@@ -44,7 +44,9 @@ const loginPost = async (req, res) => {
   if(user) {
     const auth = await bcrypt.compare(req.body.password, user.password);
     if(auth) {
-      return user;
+      const token = createToken(user.id);
+      res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+      res.redirect('/');
     };
   };
 };
