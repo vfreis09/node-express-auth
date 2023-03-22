@@ -32,7 +32,7 @@ const signupPost = (req, res) => {
 };
 
 const loginGet = (req, res) => {
-
+  res.send('you are in the login page!');
 };
 
 const loginPost = async (req, res) => {

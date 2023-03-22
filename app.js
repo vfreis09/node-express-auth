@@ -4,7 +4,7 @@ const { Sequelize } = require('sequelize');
 const bookRouter = require('./src/routes/router');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-
+const requireAuth = require('./src/middleware/authMiddleware');
 const app = express();
 
 //Middleware
@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.get('/books', (req, res) => {
+app.get('/books', requireAuth, (req, res) => {
   res.send('books page!');
 });
 
