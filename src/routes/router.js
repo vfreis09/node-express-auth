@@ -10,4 +10,6 @@ router.get('/login', bookController.loginGet);
 
 router.post('/login', bookController.loginPost);
 
+router.get('/logout', bookController.logoutGet);
+
 module.exports = router;
